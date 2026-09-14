@@ -3,30 +3,76 @@ name: kinetics
 description: "Spring-physics web animations. Use for motion UI."
 ---
 
-# Kinetics
+# Kinetics — Spring-Physics Motion for Web Interfaces
 
-**Source:** [kinetics.colorion.co](https://kinetics.colorion.co/) | **Author:** Csaba Kissi (Colorion)
+**Source:** [kinetics.colorion.co](https://kinetics.colorion.co/) | **GitHub:** [ckissi/kinetics](https://github.com/ckissi/kinetics) | **Author:** Csaba Kissi (Colorion)
 
-153+ spring-physics micro-interactions. Each effect: live demo + CSS/React/AI prompt.
+## What It Is
 
-## Spring Parameters
-| Param | Range | Default | Effect |
-|-------|-------|---------|--------|
+Kinetics is a gallery of **153+ spring-physics micro-interactions** for web interfaces. Each effect ships with:
+- **Live demo** — interactive preview
+- **Physics-style parameter readout** — stiffness, damping, mass values
+- **Copy-paste CSS code** — pure CSS implementation
+- **Copy-paste React code** — React hooks implementation
+- **Ready-made AI prompt** — LLM-friendly prompt to generate the animation in ChatGPT/Claude/Gemini
+
+## Core Concept: Spring Physics vs Fixed-Duration Easing
+
+Traditional CSS animations use fixed durations (e.g., `300ms ease-out`). Kinetics uses **spring physics** — the animation feels alive and responsive because it's based on real physical simulation:
+
+- **Stiffness** — How tight/rigid the spring is (higher = faster, snappier)
+- **Damping** — How quickly oscillation dies (higher = less bounce)
+- **Mass** — How heavy the element feels (higher = slower, more momentum)
+
+## Categories (153+ effects)
+
+### Interaction & Input
+- Button hover/press effects (scale, glow, magnetic)
+- Input field focus animations
+- Toggle/switch spring transitions
+- Drag and snap behaviors
+- Magnetic cursor effects
+- Ripple effects
+
+### Feedback & State
+- Success/error state animations
+- Loading spinners with spring physics
+- Toast/notification slide-in
+- Skeleton loading shimmer
+- Progress bar spring fill
+- Checkmark draw animation
+
+### Surface & Motion
+- Page/card transitions
+- Stagger reveal animations
+- Parallax scroll effects
+- Modal/overlay spring open/close
+- Drawer slide with spring bounce
+- Grid shuffle/morph
+
+## Spring Physics Parameters Reference
+
+| Parameter | Range | Typical | Effect |
+|-----------|-------|---------|--------|
 | Stiffness | 50-400 | 170 | Higher = snappier |
 | Damping | 5-40 | 26 | Higher = less bounce |
-| Mass | 0.5-5 | 1 | Higher = heavier |
+| Mass | 0.5-5 | 1 | Higher = heavier/slower |
 
-## Presets
+### Common Presets
+
 | Feel | Stiffness | Damping | Mass |
 |------|-----------|---------|------|
 | Bouncy | 120 | 8 | 1 |
 | Smooth | 170 | 26 | 1 |
 | Snappy | 300 | 20 | 0.8 |
+| Heavy | 100 | 15 | 2 |
 | Jelly | 200 | 6 | 1 |
+| Gentle | 80 | 18 | 1 |
 
-## CSS (no JS)
+## CSS Implementation Pattern
+
 ```css
-/* Spring curve via linear() — zero JS runtime */
+/* Spring animation using CSS linear() — no JS needed */
 .spring-element {
   transition: transform 0.6s linear(
     0, 0.004, 0.016, 0.035, 0.063, 0.098, 0.141, 0.191,
@@ -54,7 +100,10 @@ description: "Spring-physics web animations. Use for motion UI."
 }
 ```
 
-## React
+The `linear()` function with many stops approximates a real spring curve — zero JS runtime cost.
+
+## React Implementation Pattern
+
 ```jsx
 import { useState } from 'react';
 
@@ -76,15 +125,77 @@ function SpringButton({ children }) {
 }
 ```
 
-## AI Prompt Workflow
-1. Browse effects at kinetics.colorion.co
-2. Find desired effect
-3. Click "AI Prompt" tab
-4. Copy prompt → paste into ChatGPT/Claude/Gemini
-5. Get production-ready code
+## AI Prompt Usage
 
-## When to Use
-- Micro-interactions (buttons, cards, inputs)
-- Physics-based motion feel
-- Design system motion language
-- AI-assisted animation development
+Each Kinetics effect comes with a **ready-made AI prompt**. These are:
+- LLM-friendly descriptions of the animation behavior
+- Include all spring parameters
+- Designed for ChatGPT, Claude, Gemini, Cursor, etc.
+- Copy → paste into AI tool → get production-ready code
+
+### How to Use AI Prompts
+
+1. Browse [kinetics.colorion.co](https://kinetics.colorion.co/)
+2. Find the effect you want
+3. Click "AI Prompt" tab (alongside CSS/React tabs)
+4. Copy the prompt
+5. Paste into your AI coding assistant
+6. Get full implementation
+
+### Example AI Prompt Structure
+
+```
+Create a spring-physics button hover effect with:
+- On hover: scale(1.05) with stiffness=170, damping=12, mass=1
+- On click: scale(0.95) with stiffness=300, damping=20
+- Add a subtle glow that fades in on hover
+- Use CSS transition with linear() for spring curve
+- No JavaScript dependencies
+```
+
+## When to Use Kinetics Patterns
+
+### Use when:
+- Adding micro-interactions to buttons, cards, inputs
+- Need physics-based (not linear/cubic-bezier) animation feel
+- Building design systems with consistent motion language
+- Want responsive, natural-feeling UI motion
+- Need ready-made animation prompts for AI-assisted development
+
+### Don't use when:
+- Simple fade-in/out is sufficient (overkill)
+- Performance-critical animations on many elements (use CSS transforms only)
+- SVG path animations (use GSAP/Motion instead)
+- Complex timeline sequences (use GSAP)
+
+## Integration with Other Tools
+
+- **Framer Motion** — Use Kinetics prompts to describe effects, implement with `motion.div` + spring config
+- **React Spring** — Same pattern, use `useSpring` with stiffness/damping/mass
+- **GSAP** — For more complex sequences, use Kinetics concepts but GSAP spring helper
+- **Pure CSS** — Best for simple effects, use `linear()` spring approximation
+
+## Performance Tips
+
+1. **Prefer CSS `linear()` over JS** — Zero runtime cost, GPU-accelerated
+2. **Use `transform` and `opacity` only** — Triggers compositor, no layout thrash
+3. **Will-change sparingly** — Only on elements that will animate
+4. **Batch spring updates** — In React, use `requestAnimationFrame` for smooth springs
+5. **Reduce motion** — Respect `prefers-reduced-motion`
+
+## Reduced Motion
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .spring-element {
+    transition: transform 0.01ms !important;
+  }
+}
+```
+
+## Links
+
+- **Live Demo:** [kinetics.colorion.co](https://kinetics.colorion.co/)
+- **GitHub:** [github.com/ckissi/kinetics](https://github.com/ckissi/kinetics)
+- **Author:** Csaba Kissi — [colorion.co](https://colorion.co)
+- **License:** Open Source
